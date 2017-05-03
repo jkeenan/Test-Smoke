@@ -73,37 +73,37 @@ sub sync {
     # gitdir typically is 'git-perl'
     chdir $self->{gitdir} or croak("Cannot chdir($self->{gitdir}): $!");
 
-    my $gitout;
-    $gitout = $gitbin->run(clean => '-dfx');
-    $self->log_debug($gitout);
+    # get_git_branch() returns first line in file smokecurrent.gitbranch
+    my $testingbranch = $self->get_git_branch || 'blead';
+    chomp($testingbranch);
 
+    my $gitout;
     $gitout = $gitbin->run(fetch => ('--prune', 'origin'));
     $self->log_debug($gitout);
 
-    # We'll assume that 'blead' already exists, but we want it in sync with
-    # origin
-    $gitout = $gitbin->run(checkout => 'blead');
+    $gitout = $gitbin->run(reset => ('--hard', "origin/$testingbranch"));
     $self->log_debug($gitout);
 
-    $gitout = $gitbin->run(reset => ('--hard', "origin/blead"));
+    $gitout = $gitbin->run(clean => '-dfx');
     $self->log_debug($gitout);
 
-    # get_git_branch() returns first line in file smokecurrent.gitbranch
-    my $testingbranch = $self->get_git_branch;
-    chomp($testingbranch);
-
-    unless ($testingbranch eq 'blead') {
-
-        # For smoke-testing, we (probably) always want to test a branch in its
-        # current state out there on the origin.  We don't want to test any
-        # previously created branch by that name in this repository.
-
-        $gitout = $gitbin->run(branch => ('-D', $testingbranch));
-        $self->log_debug($gitout);
-
-        $gitout = $gitbin->run(checkout => ('-b', $testingbranch, "origin/$testingbranch"));
-        $self->log_debug($gitout);
-    }
+#    # We'll assume that 'blead' already exists, but we want it in sync with
+#    # origin
+#    $gitout = $gitbin->run(checkout => 'blead');
+#    $self->log_debug($gitout);
+#
+#    unless ($testingbranch eq 'blead') {
+#
+#        # For smoke-testing, we (probably) always want to test a branch in its
+#        # current state out there on the origin.  We don't want to test any
+#        # previously created branch by that name in this repository.
+#
+#        $gitout = $gitbin->run(branch => ('-D', $testingbranch));
+#        $self->log_debug($gitout);
+#
+#        $gitout = $gitbin->run(checkout => ('-b', $testingbranch, "origin/$testingbranch"));
+#        $self->log_debug($gitout);
+#    }
 
     chdir $cwd or croak("Cannot chdir($cwd): $!");
 
