@@ -35,11 +35,8 @@ use File::Temp qw(tempdir);
     );
     isa_ok($app, 'Test::Smoke::App::Archiver');
 
-    no warnings 'redefine';
-    my $files = { map {$_ => 1} ((qw/mktest.jsn mktest.out mktest.rpt/), $lfile) };
-print STDERR "VVV:\n";
+    my $files = { map {$_ => 1} ((map { "mktest.$_" } @mktest_filetypes), $lfile) };
     my $result = $app->run;
-    print STDERR "WWW: @$result\n";
     my $got = { map {$_ => 1} @{$result} };
     is_deeply($got, $files, "List of files archived") or print Dumper [ $got, $files ];
 }
