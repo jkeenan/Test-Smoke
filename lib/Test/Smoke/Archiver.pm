@@ -11,6 +11,7 @@ use File::Copy;
 use File::Path;
 use File::Spec::Functions;
 use Test::Smoke::Util qw/get_patch/;
+use Data::Dump qw(dd pp);
 
 =head1 NAME
 
@@ -84,6 +85,7 @@ Copy files.
 
 sub archive_files {
     my $self = shift;
+print STDERR "CCC: Entering lib/Test/Smoke/Archiver.pm archive_files()\n";
     if (!$self->archive) {
         return $self->log_info("Skipping archive: --noarchive.");
     }
@@ -103,12 +105,15 @@ sub archive_files {
     (my $patch_level = get_patch($self->ddir)->[0]) =~ tr/ //sd;
     $self->{_patchlevel} = $patch_level;
 
+print STDERR "DDD: lib/Test/Smoke/Archiver.pm archive_files() status\n";
+dd($self);
     my @archived;
-    for my $filetype (qw/rpt out jsn log/) {
+    for my $filetype (qw/rpt out jsn/) {
         my $to_archive = "archive_$filetype";
         my $filename = $filetype eq 'log' ? 'lfile' : "${filetype}file";
         push @archived, $self->$filename if $self->$to_archive;
     }
+print STDERR "EEE: lib/Test/Smoke/Archiver.pm archive_files(): Here's where I need to close the log file\n";
     return \@archived;
 }
 

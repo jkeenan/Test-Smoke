@@ -41,6 +41,7 @@ Calls C<< $self->archiver->archive_files() >>.
 sub run {
     my $self = shift;
 
+print STDERR "BBB: Entering lib/Test/Smoke/App/Archiver.pm run()\n";
     $self->archiver->archive_files();
 }
 

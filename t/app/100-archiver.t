@@ -16,6 +16,7 @@ use Test::Smoke::App::Options;
 
     no warnings 'redefine';
     my $files = [qw/mktest.json mktest.out mktest.rpt blead.log/];
+print STDERR "VVV: $0: Mocking Test::Smoke::Archiver::archive_files()\n";
     local *Test::Smoke::Archiver::archive_files = sub {
         return $files;
     };
