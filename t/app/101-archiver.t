@@ -35,10 +35,13 @@ use File::Temp qw(tempdir);
     );
     isa_ok($app, 'Test::Smoke::App::Archiver');
 
-    my $files = { map {$_ => 1} ((map { "mktest.$_" } @mktest_filetypes), $lfile) };
+    my $expected = { map {$_ => 1} (
+        ( map { "mktest.$_" } grep { $_ !~ /\.log/ } @mktest_filetypes),
+#        $lfile
+    ) };
     my $result = $app->run;
     my $got = { map {$_ => 1} @{$result} };
-    is_deeply($got, $files, "List of files archived") or print Dumper [ $got, $files ];
+    is_deeply($got, $expected, "List of files archived") or print Dumper [ $got, $expected ];
 }
 
 Test::NoWarnings::had_no_warnings();
