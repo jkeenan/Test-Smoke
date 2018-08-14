@@ -106,7 +106,7 @@ print STDERR "CCC: Entering lib/Test/Smoke/Archiver.pm archive_files()\n";
     $self->{_patchlevel} = $patch_level;
 
 print STDERR "DDD: lib/Test/Smoke/Archiver.pm archive_files() status\n";
-dd($self);
+pp($self);
 #    my @archived;
 #    for my $filetype (qw/rpt out jsn log/) {
 #        my $to_archive = "archive_$filetype";
@@ -120,6 +120,7 @@ dd($self);
         push @archived, $self->$filename if $self->$to_archive;
     }
 print STDERR "EEE: lib/Test/Smoke/Archiver.pm archive_files(): Here's where I need to close the log file\n";
+pp($self);
     return \@archived;
 }
 
