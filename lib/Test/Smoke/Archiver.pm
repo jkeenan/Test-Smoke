@@ -107,12 +107,6 @@ print STDERR "CCC: Entering lib/Test/Smoke/Archiver.pm archive_files()\n";
 
 print STDERR "DDD: lib/Test/Smoke/Archiver.pm archive_files() status\n";
 pp($self);
-#    my @archived;
-#    for my $filetype (qw/rpt out jsn log/) {
-#        my $to_archive = "archive_$filetype";
-#        my $filename = $filetype eq 'log' ? 'lfile' : "${filetype}file";
-#        push @archived, $self->$filename if $self->$to_archive;
-#    }
     my @archived;
     for my $filetype (qw/rpt out jsn/) {
         my $to_archive = "archive_$filetype";
