@@ -7,7 +7,6 @@ our $VERSION = '0.001';
 use base 'Test::Smoke::App::Base';
 
 use Test::Smoke::Archiver;
-use Data::Dump qw(dd pp);
 
 =head1 NAME
 
@@ -30,8 +29,6 @@ sub new {
         v => $self->option('verbose'),
     );
 
-print STDERR "AAA1: Test::Smoke::App::Archiver object (after adding Archiver)\n";
-pp($self);
     return $self;
 }
 
@@ -44,7 +41,6 @@ Calls C<< $self->archiver->archive_files() >>.
 sub run {
     my $self = shift;
 
-print STDERR "BBB: Entering lib/Test/Smoke/App/Archiver.pm run()\n";
     $self->archiver->archive_files();
 }
 

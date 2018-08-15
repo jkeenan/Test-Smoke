@@ -37,7 +37,6 @@ use File::Temp qw(tempdir);
 
     my $expected = { map {$_ => 1} (
         ( map { "mktest.$_" } grep { $_ !~ /\.log/ } @mktest_filetypes),
-#        $lfile
     ) };
     my $result = $app->run;
     my $got = { map {$_ => 1} @{$result} };
