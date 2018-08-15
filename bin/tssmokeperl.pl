@@ -6,7 +6,7 @@ use FindBin;
 use lib $FindBin::Bin;
 use File::Copy;
 use JSON;
-use Path::Tiny;
+use Path::Tiny ();
 use POSIX ();
 
 =pod
@@ -30,7 +30,7 @@ system(qq|$^X $smokeperl_program @argv > $lfile 2>&1|)
 my $json_file = File::Spec->catfile($FindBin::Bin, 'perl-current', 'mktest.jsn');
 die "Could not locate $json_file" unless -f $json_file;
 
-my $utf8_encoded_json_text = path($json_file)->slurp_utf8;
+my $utf8_encoded_json_text = Path::Tiny::path($json_file)->slurp_utf8;
 my $config = decode_json($utf8_encoded_json_text);
 my $SHA = $config->{sysinfo}->{git_id};
 
