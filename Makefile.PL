@@ -123,6 +123,8 @@ my %TEST_REQUIRES = (
     'Test::NoWarnings' => 0,
     'HTTP::Daemon'     => 0,
     'HTTP::Message'    => 0,
+    'Data::Dumper'     => 0,
+    'File::Temp'       => 0,
 );
 
 my $test_requires = (
@@ -148,9 +150,11 @@ my %wm = (
     },
     PREREQ_PM     => {
         'CGI::Util'    => 0,
+        'File::Copy'   => 0,
         'File::Spec'   => 0.82,
         'POSIX'        => 0,
         'System::Info' => 0.050,
+        'Path::Tiny'   => 0,
         ($test_requires eq 'PREREQ_PM' ? %TEST_REQUIRES : ()),
         %extra_deps,
     },
