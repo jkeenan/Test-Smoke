@@ -1998,7 +1998,7 @@ $p5lib
 PATH=$FindBin::Bin:$ENV{PATH}
 export PATH
 umask $config{umask}
-$^X $smokeperl -c "\$CFGNAME" \$continue \$\* > $options{log} 2>&1
+$^X $smokeperl -c "\$CFGNAME" \$continue \$\*
 
 rm "\$LOCKFILE"
 EO_SH
