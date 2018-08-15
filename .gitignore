@@ -9,3 +9,4 @@ tags
 *.swp
 MYMETA.*
 *.bak
+Test-Smoke-*.tar.gz
