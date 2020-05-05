@@ -17,11 +17,12 @@ use Test::Smoke::Util::LoadAJSON;
 use Test::Smoke::Poster;
 use Test::Smoke::Util qw/whereis/;
 use Test::Smoke::Util::FindHelpers 'has_module';
-
+unshift @INC, q|/home/jkeenan/learn/perl/HTTP-Daemon-2d396b8/lib|;
 if (!has_module('HTTP::Daemon')) {
     plan skip_all => "Need 'HTTP::Daemon' for this test!";
 }
 require HTTP::Daemon;
+note("Using HTTP::Daemon version $HTTP::Daemon::VERSION");
 require HTTP::Status; HTTP::Status->import('RC_OK', 'RC_NOT_IMPLEMENTED');
 require HTTP::Response;
 require HTTP::Headers;
@@ -103,70 +104,70 @@ SKIP: {
     unlink $poster->json_filename;
 }
 
-SKIP: {
-    my $curlbin = whereis('curl');
-    skip("Could not find curl", 3) if !$curlbin;
-
-    my $poster = Test::Smoke::Poster->new(
-        'curl',
-        ddir        => 't',
-        jsnfile     => 'testsuite.jsn',
-        smokedb_url => "${url}report",
-        curlbin     => $curlbin,
-        v           => $debug ? 2 : 0,
-    );
-    isa_ok($poster, 'Test::Smoke::Poster::Curl');
-
-    ok(write_json($poster->json_filename, $sysinfo), "write_json");
-    my $response = eval { $poster->post() };
-    $response = $@ if $@;
-    is($response, 42, "Got id");
-
-    unlink $poster->json_filename;
-}
-
-SKIP: {
-    skip("Could not load HTTP::Tiny", 3) if ! has_module('HTTP::Tiny');
-
-    my $poster = Test::Smoke::Poster->new(
-        'HTTP::Tiny',
-        ddir        => 't',
-        jsnfile     => 'testsuite.jsn',
-        smokedb_url => "${url}report",
-        v           => $debug ? 2 : 0,
-    );
-    isa_ok($poster, 'Test::Smoke::Poster::HTTP_Tiny');
-
-    ok(write_json($poster->json_filename, $sysinfo), "write_json");
-    my $response = eval { $poster->post() };
-    $response = $@ if $@;
-    is($response, 42, "Got id");
-
-    unlink $poster->json_filename;
-}
-
-SKIP: {
-    skip("Could not load HTTP::Lite", 3) if ! has_module('HTTP::Lite');
-
-    my $poster = Test::Smoke::Poster->new(
-        'HTTP::Lite',
-        ddir        => 't',
-        jsnfile     => 'testsuite.jsn',
-        smokedb_url => "${url}report",
-        v           => $debug ? 2 : 0,
-    );
-    isa_ok($poster, 'Test::Smoke::Poster::HTTP_Lite');
-
-    ok(write_json($poster->json_filename, $sysinfo), "write_json");
-    my $response = eval { $poster->post() };
-    $response = $@ if $@;
-    is($response, 42, "Got id");
-
-    unlink $poster->json_filename;
-}
-
-Test::NoWarnings::had_no_warnings();
-$Test::NoWarnings::do_end_test = 0;
+#SKIP: {
+#    my $curlbin = whereis('curl');
+#    skip("Could not find curl", 3) if !$curlbin;
+#
+#    my $poster = Test::Smoke::Poster->new(
+#        'curl',
+#        ddir        => 't',
+#        jsnfile     => 'testsuite.jsn',
+#        smokedb_url => "${url}report",
+#        curlbin     => $curlbin,
+#        v           => $debug ? 2 : 0,
+#    );
+#    isa_ok($poster, 'Test::Smoke::Poster::Curl');
+#
+#    ok(write_json($poster->json_filename, $sysinfo), "write_json");
+#    my $response = eval { $poster->post() };
+#    $response = $@ if $@;
+#    is($response, 42, "Got id");
+#
+#    unlink $poster->json_filename;
+#}
+#
+#SKIP: {
+#    skip("Could not load HTTP::Tiny", 3) if ! has_module('HTTP::Tiny');
+#
+#    my $poster = Test::Smoke::Poster->new(
+#        'HTTP::Tiny',
+#        ddir        => 't',
+#        jsnfile     => 'testsuite.jsn',
+#        smokedb_url => "${url}report",
+#        v           => $debug ? 2 : 0,
+#    );
+#    isa_ok($poster, 'Test::Smoke::Poster::HTTP_Tiny');
+#
+#    ok(write_json($poster->json_filename, $sysinfo), "write_json");
+#    my $response = eval { $poster->post() };
+#    $response = $@ if $@;
+#    is($response, 42, "Got id");
+#
+#    unlink $poster->json_filename;
+#}
+#
+#SKIP: {
+#    skip("Could not load HTTP::Lite", 3) if ! has_module('HTTP::Lite');
+#
+#    my $poster = Test::Smoke::Poster->new(
+#        'HTTP::Lite',
+#        ddir        => 't',
+#        jsnfile     => 'testsuite.jsn',
+#        smokedb_url => "${url}report",
+#        v           => $debug ? 2 : 0,
+#    );
+#    isa_ok($poster, 'Test::Smoke::Poster::HTTP_Lite');
+#
+#    ok(write_json($poster->json_filename, $sysinfo), "write_json");
+#    my $response = eval { $poster->post() };
+#    $response = $@ if $@;
+#    is($response, 42, "Got id");
+#
+#    unlink $poster->json_filename;
+#}
+#
+#Test::NoWarnings::had_no_warnings();
+#$Test::NoWarnings::do_end_test = 0;
 done_testing();
 
 sub write_json {
