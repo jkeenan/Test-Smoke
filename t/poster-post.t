@@ -39,7 +39,6 @@ my $jsnfile = 'testsuite.jsn';
     $daemon = HTTP::Daemon->new() || die "Could not initialize a Daemon";
 #    # IPv6 doesn't work, so force IPv4 localhost
 #    ($url = $daemon->url) =~ s{(http://)([^:]+)}{${1}127.0.0.1};
-    # IPv6 doesn't work, so force IPv4 localhost
     $url = $daemon->url;
 
     $pid = fork();
