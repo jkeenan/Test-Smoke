@@ -36,7 +36,12 @@ my $jsnfile = 'testsuite.jsn';
 {
     $daemon = HTTP::Daemon->new() || die "Could not initialize a Daemon";
     # IPv6 doesn't work, so force IPv4 localhost
-    ($url = $daemon->url) =~ s{(http://)([^:]+)}{${1}127.0.0.1};
+    my $durl = $daemon->url;
+    print "URL before substitution: $durl\n";
+    #($url = $daemon->url) =~ s{(http://)([^:]+)}{${1}127.0.0.1};
+    ($url = $durl) =~ s{(http://)([^:]+)}{${1}127.0.0.1};
+    print "URL after substitution:  $url\n";
+
 
     $pid = fork();
     if ($pid) { # Continue
