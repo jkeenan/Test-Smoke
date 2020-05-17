@@ -26,6 +26,9 @@ require HTTP::Status; HTTP::Status->import('RC_OK', 'RC_NOT_IMPLEMENTED');
 require HTTP::Response;
 require HTTP::Headers;
 
+note("HTTP::Daemon $HTTP::Daemon::VERSION");
+note("HTTP::Response $HTTP::Response::VERSION");
+
 my $debug = $ENV{SMOKE_DEBUG};
 
 my ($pid, $daemon, $url);
@@ -88,6 +91,7 @@ my $sysinfo = { sysinfo => $^O };
 SKIP: {
     skip("Could not load LWP::UserAgent", 3) if !has_module('LWP::UserAgent');
 
+    note("LWP::UserAgent $LWP::UserAgent::VERSION");
     my $poster = Test::Smoke::Poster->new(
         'LWP::UserAgent',
         ddir        => 't',
@@ -130,6 +134,7 @@ SKIP: {
 SKIP: {
     skip("Could not load HTTP::Tiny", 3) if ! has_module('HTTP::Tiny');
 
+    note("HTTP::Tiny $HTTP::Tiny::VERSION");
     my $poster = Test::Smoke::Poster->new(
         'HTTP::Tiny',
         ddir        => 't',
@@ -150,6 +155,7 @@ SKIP: {
 SKIP: {
     skip("Could not load HTTP::Lite", 3) if ! has_module('HTTP::Lite');
 
+    note("HTTP::Lite $HTTP::Lite::VERSION");
     my $poster = Test::Smoke::Poster->new(
         'HTTP::Lite',
         ddir        => 't',
