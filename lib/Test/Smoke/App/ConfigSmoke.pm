@@ -159,7 +159,7 @@ EOHI
 
 =head2 say_bye
 
-Configuration has finshed, show some of the results and say goodbye.
+Configuration has finished, show some of the results and say goodbye.
 
 =cut
 
@@ -234,7 +234,7 @@ sub handle_option {
 
 =head2 default_for_option
 
-Default values can come from differnt sources:
+Default values can come from different sources:
 
 I<app-option>, I<config-file>, I<config-default> or I<option-default>.
 
