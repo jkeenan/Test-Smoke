@@ -12,7 +12,7 @@ use Test::Smoke::PostQueue;
 
 =head1 NAME
 
-Test::Smoke::App::HadleQueue - Queue handler for reports that failed to POST to CoreSmokeDB
+Test::Smoke::App::HandleQueue - Queue handler for reports that failed to POST to CoreSmokeDB
 
 =head1 SYNOPSIS
 
