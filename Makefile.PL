@@ -157,6 +157,7 @@ my %TEST_REQUIRES = (
     'HTTP::Message'    => 0,
     'JSON'             => 4.10,
     'Path::Tiny'       => 0, # To be revised (?). Only used by tsarchivelog.pl
+    'File::Temp'       => 0,
     ($mmver > 6.64 ? (%BUILD_REQUIRES) : ()),
 );
 

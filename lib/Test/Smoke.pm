@@ -42,6 +42,14 @@ C<Test::Smoke> exports C<$conf> and C<read_config()> by default.
 
 Read (require) the configfile.
 
+Takes one optional argument: a string holding the name of the configuration
+file.  Defaults to C<smokecurrent_config>.
+
+If there is an error in reading the configuration file, C<read_config()>
+returns an undefined value; the content of the error can be found by calling
+C<config_error()>.  If there is no such error, C<read_config()> returns a true
+value.
+
 =cut
 
 sub read_config {
@@ -63,7 +71,7 @@ sub read_config {
 
 =head2 Test::Smoke->config_error()
 
-Return the value of C<$ConfigError>
+Return the value of C<$ConfigError>.
 
 =cut
 
