@@ -2,7 +2,7 @@ package Test::Smoke;
 use strict;
 
 use vars qw($conf);
-our $VERSION  = "1.87";
+our $VERSION  = "1.88";
 
 use base 'Exporter';
 our @EXPORT  = qw( $conf &read_config &run_smoke );
@@ -78,27 +78,6 @@ C<is_win32()> returns true if  C<< $^O eq "MSWin32" >>.
 =cut
 
 sub is_win32() { $^O eq "MSWin32" }
-
-=head2 do_manifest_check( $ddir, $smoker )
-
-C<do_manifest_check()> uses B<Test::Smoke::SourceTree> to do the
-MANIFEST check.
-
-=cut
-
-sub do_manifest_check {
-    my( $ddir, $smoker ) = @_;
-
-    my $tree = Test::Smoke::SourceTree->new( $ddir );
-    my $mani_check = $tree->check_MANIFEST( 'mktest.out', 'mktest.rpt' );
-    foreach my $file ( sort keys %$mani_check ) {
-        if ( $mani_check->{ $file } == ST_MISSING ) {
-            $smoker->log( "MANIFEST declared '$file' but it is missing\n" );
-        } elsif ( $mani_check->{ $file } == ST_UNDECLARED ) {
-            $smoker->log( "MANIFEST did not declare '$file'\n" );
-        }
-    }
-}
 
 =head2 set_smoke_patchlevel( $ddir, $patch[, $verbose] )
 
