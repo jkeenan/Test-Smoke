@@ -109,7 +109,7 @@ general.
 
 =over 4
 
-=item B<-Accflags='-DPERLL_COPY_ON_WRITE'>
+=item B<-Accflags='-DPERL_COPY_ON_WRITE'>
 
 The fastest way to do it, is to add a new section to your
 buildconfiguration file, like this:
