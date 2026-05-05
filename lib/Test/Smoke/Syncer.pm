@@ -136,6 +136,11 @@ At this moment we support three basic types of syncing the perl source-tree.
 
 =over
 
+=item git
+
+This method uses the B<git> program (possibly with the C<< --bare >> option
+to get your perl source-tree fetched and up to date.
+
 =item rsync
 
 This method uses the B<rsync> program with the C<< --delete >> option
