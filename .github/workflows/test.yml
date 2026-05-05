@@ -53,7 +53,7 @@ jobs:
       - id: action
         uses: perl-actions/perl-versions@v2.0
         with:
-          since-perl: '5.14'
+          since-perl: '5.24'
           with-devel: true
 
   linux:
