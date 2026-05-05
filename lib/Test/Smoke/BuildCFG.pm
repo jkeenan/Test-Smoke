@@ -219,7 +219,7 @@ sub _read {
 C<_parse()> will split the build configurations file in sections.
 Sections are ended with a line that begins with an equals-sign ('=').
 
-There are two types of section
+There are two types of sections:
 
 =over
 
@@ -524,7 +524,7 @@ use Text::ParseWords qw( quotewords );
 
 =head1 PACKAGE
 
-Test::Smoke::BuildCFG::Config - OO interface for a build confiuration
+Test::Smoke::BuildCFG::Config - OO interface for a build configuration
 
 =head1 SYNOPSIS
 
