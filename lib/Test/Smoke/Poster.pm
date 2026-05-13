@@ -27,7 +27,7 @@ Test::Smoke::Poster - Factory for poster objects.
 
 =head1 DESCRIPTION
 
-Returns a instance of the object-class requested.
+Returns an instance of the object-class requested.
 
 =cut
 

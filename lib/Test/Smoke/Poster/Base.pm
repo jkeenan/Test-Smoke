@@ -53,7 +53,7 @@ None.
 sub new {
     my $class = shift;
     my %args = @_;
-    # Convert to "underscore names" for Test::Smoke::ObjecBase.
+    # Convert to "underscore names" for Test::Smoke::ObjectBase.
     my %fields = map
         +( "_$_" => delete $args{$_})
     , keys %args;
