@@ -15,7 +15,7 @@ use Test::Smoke::Reporter;
 
 Test::Smoke::App::SendReport - Implementation for tssendrpt.pl
 
-=head1 DESCRIPTIN
+=head1 DESCRIPTION
 
 =head2 $sendrpt->run()
 
