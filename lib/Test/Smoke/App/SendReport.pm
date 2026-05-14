@@ -55,7 +55,11 @@ sub run {
         );
         $self->log_info("==> Starting poster");
         my $id = $self->poster->post();
-        $self->log_warn("%s/%s", $self->option('smokedb_url'), $id);
+        my $smokedb_url = $self->option('smokedb_url');
+        my ($domain, $report_string) = $smokedb_url =~ m{^(.*?)\/api\/(.*)$};
+        my $visible_url = sprintf("%s/%s" => $domain, $report_string);
+        $self->log_warn("%s/%s", "Post URL:   $smokedb_url", $id);
+        $self->log_warn("%s/%s", "Visible at: $visible_url", $id);
         return $id;
     }
     else {
