@@ -72,7 +72,7 @@ There are four (4) ways to specify that patch.
 
 =over 4
 
-=item I<refernece to a SCALAR>
+=item I<reference to a SCALAR>
 
 The scalar holds the complete patch as literal text.
 
@@ -153,6 +153,7 @@ sub new {
     my  $class = ref $proto || $proto;
 
     my $type = lc shift;
+print STDERR "AAA: <$type>\n";
     unless ( $type && exists $CONFIG{valid_type}->{ $type } ) {
         defined $type or $type = 'undef';
         require Carp;
