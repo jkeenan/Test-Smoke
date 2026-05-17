@@ -2,7 +2,6 @@
  - Doc typos corrected thanks to Ron Savage
  - Doc typos corrected thanks to Jim Keenan
  - Correctly stringify curl arg question
- - Remove do_manifest_check from lib/Test/Smoke.pm thanks to Jim Keenan
 
 1.87 2026-04-22
  - Do not dual test with PERLIO=stdio anymore, force PERLIO=perlio
