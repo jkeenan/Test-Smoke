@@ -12,7 +12,7 @@ use TestLib;
 use Cwd 'abs_path';
 use File::Temp 'tempdir';
 
-use Test::More tests => 41;
+use Test::More tests => 44;
 BEGIN { use_ok( 'Test::Smoke::Patcher' ) };
 my $verbose = exists $ENV{SMOKE_VERBOSE} ? $ENV{SMOKE_VERBOSE} : 0;
 
@@ -40,6 +40,51 @@ $verbose and diag( "Found patch: '$patch'" );
 my $testpatch = File::Spec->catfile( 't', 'test.patch' );
 my $curdir = abs_path('.');
 my $tmpdir = tempdir(CLEANUP => 1);
+
+{
+    # Error handling: patcher type invalid or missing
+
+    my $type;
+
+    $type = 'double';
+    eval {
+        my $patcher = Test::Smoke::Patcher->new(
+            $type => {
+                v         => $verbose,
+                -ddir     => File::Spec->catdir($tmpdir, 'perl'),
+                -patchbin => $patch,
+            }
+        );
+    };
+    like($@, qr/Invalid Patcher-type: '$type'/,
+        "Patcher->new() failed due to invalid type '$type'");
+
+    $type = undef;
+    eval {
+        my $patcher = Test::Smoke::Patcher->new(
+            $type => {
+                v         => $verbose,
+                -ddir     => File::Spec->catdir($tmpdir, 'perl'),
+                -patchbin => $patch,
+            }
+        );
+    };
+    like($@, qr/Patcher type not provided/,
+        "Patcher->new(): invalid second argument");
+
+    $type = '';
+    eval {
+        my $patcher = Test::Smoke::Patcher->new(
+            $type => {
+                v         => $verbose,
+                -ddir     => File::Spec->catdir($tmpdir, 'perl'),
+                -patchbin => $patch,
+            }
+        );
+    };
+    like($@, qr/Patcher type not provided/,
+        "Patcher->new(): invalid second argument");
+}
 
 SKIP: { # test Test::Smoke::Patcher->patch_single()
     my $to_skip = 13;

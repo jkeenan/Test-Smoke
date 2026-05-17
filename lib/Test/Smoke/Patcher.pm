@@ -152,12 +152,19 @@ sub new {
     my $proto = shift;
     my  $class = ref $proto || $proto;
 
-    my $type = lc shift;
-print STDERR "AAA: <$type>\n";
-    unless ( $type && exists $CONFIG{valid_type}->{ $type } ) {
-        defined $type or $type = 'undef';
+    my $type;
+    my $check_arg = 0;
+    if (! defined $_[0] or !$_[0]) {
+        $type = 'undef';
         require Carp;
-        Carp::croak( "Invalid Patcher-type: '$type'" );
+        Carp::croak( "Patcher type not provided" );
+    }
+    else {
+        $type = lc shift;
+        unless ( exists $CONFIG{valid_type}->{ $type } ) {
+            require Carp;
+            Carp::croak( "Invalid Patcher-type: '$type'" );
+        }
     }
 
     my %args_raw = @_ ? UNIVERSAL::isa( $_[0], 'HASH' ) ? %{ $_[0] } : @_ : ();
