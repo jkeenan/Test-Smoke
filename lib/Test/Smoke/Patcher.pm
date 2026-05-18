@@ -135,7 +135,7 @@ Constant: 2**MAX_FLAG_COUNT) - 1
 
 =item Test::Smoke::Patcher->new( $type => \%args );
 
-C<new()> crates the object. Valid types are B<single> and B<multi>.
+C<new()> creates the object. Valid types are B<single> and B<multi>.
 Valid keys for C<%args>:
 
     * ddir:     the build directory

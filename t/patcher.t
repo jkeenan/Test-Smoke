@@ -189,7 +189,7 @@ SKIP: { # Test multi mode
     select( (select(PINFO), $|++)[0] );
     print PINFO <<EOPINFO;
 $relpatch
-# Do some somments 
+# Do some comments
 # This is to take out #20001, so we can see what happend
 $relpatch;-R
 $relpatch
@@ -198,7 +198,7 @@ EOPINFO
     eval { $patcher->patch_multi( \*PINFO ) };
     ok( ! $@, "No Errors while running patch $@" );
     $newfile = get_file($tmpdir, qw( perl patchme.txt ));
-    like( $newfile, '/^VERSION == 20001$/m', "Conent OK" );
+    like( $newfile, '/^VERSION == 20001$/m', "Content OK" );
     close PINFO;
     1 while unlink $pinfo;
 
@@ -209,14 +209,14 @@ EOPINFO
     eval { $patcher->patch_multi( File::Spec->rel2abs($pinfo) ) };
     ok( ! $@, "No Errors while running patch $@" );
     $newfile = get_file($tmpdir, qw( perl patchme.txt ));
-    unlike( $newfile, '/^VERSION == 20001$/m', "Conent OK" );
+    unlike( $newfile, '/^VERSION == 20001$/m', "Content OK" );
     1 while unlink $pinfo;
 
     my $descr = '[PATCH] just testing comments';
     eval { $patcher->patch_single( $relpatch, '', $descr ) };
     ok ! $@, "Patch applied($descr) $@";
     $newfile = get_file($tmpdir, qw( perl patchme.txt ));
-    like( $newfile, '/^VERSION == 20001$/m', "Conent OK" );
+    like( $newfile, '/^VERSION == 20001$/m', "Content OK" );
     my $plevel = get_file($tmpdir, qw( perl patchlevel.h ));
     like $plevel, qq{/^\\s*,"\Q$descr\E"/m},
          "Description added to patchlevel.h";
