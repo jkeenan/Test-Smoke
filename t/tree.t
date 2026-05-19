@@ -7,7 +7,7 @@ use File::Find;
 use File::Temp 'tempdir';
 use Cwd;
 
-use Test::More tests => 22;
+use Test::More tests => 23;
 
 # We need to test SourceTree.pm
 sub mani_file_from_list($;@) {
@@ -57,9 +57,17 @@ my $path = $tmpdir;
     my $rel = File::Spec->abs2rel( $path );
     is( $tree->abs2rel, $rel, "abs2rel" );
 
-    is( $tree->mani2abs( 'win32/Makefile' ),
-        File::Spec->catfile( $path, split m|/|, 'win32/Makefile' ),
+    my $testfile = 'win32/Makefile';
+    my $exp = File::Spec->catfile( $path, split m|/|, $testfile );
+    is( $tree->mani2abs( $testfile ),
+        $exp,
         "mani2abs complex" );
+
+    my $testdir = 'ext/Devel-Peek';
+    $exp = File::Spec->catdir( $path, split m|/|, $testdir );
+    is( $tree->mani2absdir( $testdir ),
+        $exp,
+        "mani2absdir" );
 
 }
 
