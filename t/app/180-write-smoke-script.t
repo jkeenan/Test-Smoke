@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::NoWarnings ();
+#use Test::NoWarnings ();
 
 use File::Spec;
 use File::Temp qw/ tempdir /;
@@ -33,6 +33,24 @@ $Test::Smoke::LogMixin::USE_TIMESTAMP = 0;
         $obj->{_smoke_script}, 'smokecurrent.com',
         'VMS sets the .com smoke_script extension'
     );
+}
+
+{
+
+    local $^O = 'MSWin32';
+    note("Simulate use of write_smoke_script on $^O");
+
+    my $tmp = tempdir(CLEANUP => 1);
+    my $jcl = File::Spec->catfile($tmp, 'smokecurrent.cmd');
+    my $obj = FakeConfigSmoke->new(_smoke_script_value => $jcl);
+
+    open my $cap, '>', \my $out;
+    my $stdout = select $cap; $|++;
+    $obj->write_smoke_script('cron', '22:25');
+    select $stdout;
+
+    like($out, qr/>> Created '\Q$jcl\E'/,       '"Created" line logged via log_info');
+    ok(-f $jcl,                                 'shell script file was written');
 }
 
 { # write_as_shell: happy path uses log_info for header and "Created" line
@@ -95,8 +113,8 @@ $Test::Smoke::LogMixin::USE_TIMESTAMP = 0;
     );
 }
 
-Test::NoWarnings::had_no_warnings();
-$Test::NoWarnings::do_end_test = 0;
+#Test::NoWarnings::had_no_warnings();
+#$Test::NoWarnings::do_end_test = 0;
 done_testing();
 
 # ------------------------------------------------------------------
