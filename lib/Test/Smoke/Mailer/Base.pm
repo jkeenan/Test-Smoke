@@ -81,7 +81,7 @@ by the new global regex kept in C<< $Test::Smoke::Mailer::NOCC_RE >>.
 
 sub _get_cc {
     my( $self, $subject ) = @_;
-    return "" if $subject =~ m/$Test::Smoke::Mailer::NOCC_RE/;
+    return "" if $subject =~ m/$Test::Smoke::Mailer::Base::NOCC_RE/;
 
     return $self->{cc} || "" unless $self->{ccp5p_onfail};
 
