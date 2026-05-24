@@ -59,7 +59,21 @@ my %basic_mailer_args = (
     $subject = ' FAIL(X)';
     $rv = $mailer->_get_cc($subject);
     is($rv, '', "_get_cc() returned empty string, as expected");
+
+    $subject = ' UNKNOWN';
+    $rv = $mailer->_get_cc($subject);
+    is($rv, '', "_get_cc() returned empty string, as expected");
 }
+
+#{
+#    note("exercise _get_cc(): 2");
+#
+#    my %mailer_args = map { $_ => $basic_mailer_args{$_}  } keys %basic_mailer_args;
+#    my $mailer = Test::Smoke::Mailer::Base->new(%mailer_args);
+#    isa_ok($mailer, 'Test::Smoke::Mailer::Base');
+#
+#    my ($subject, $rv);
+#}
 
 {
     note("report file missing");
