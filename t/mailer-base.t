@@ -98,6 +98,23 @@ my %basic_mailer_args = (
 }
 
 {
+    note("exercise _get_cc(): 4");
+
+    my %mailer_args = map { $_ => $basic_mailer_args{$_}  } keys %basic_mailer_args;
+    $mailer_args{ccp5p_onfail} = 1;
+    my $this_cc = 'foo@bar.com';
+    $mailer_args{cc} = $this_cc;
+    my $mailer = Test::Smoke::Mailer::Base->new(%mailer_args);
+    isa_ok($mailer, 'Test::Smoke::Mailer::Base');
+
+    my ($subject, $rv);
+    $subject = ' UNKNOWN';
+    my $expect = join(", " => $this_cc, $Test::Smoke::Mailer::Base::P5P);
+    $rv = $mailer->_get_cc($subject);
+    is($rv, $expect, "_get_cc() returned expected email addresses");
+}
+
+{
     note("report file missing");
 
     my $bad_report = "$$-nonexistent-report.txt";
