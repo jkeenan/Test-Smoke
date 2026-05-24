@@ -96,11 +96,11 @@ sub _get_cc {
         return $self->{cc} || "";
     }
     else {
-        if (! $Test::Smoke::Mailer::P5P) {
+        if (! $Test::Smoke::Mailer::Base::P5P) {
             return $self->{cc};
         }
         else {
-            my $p5p = $Test::Smoke::Mailer::P5P;
+            my $p5p = $Test::Smoke::Mailer::Base::P5P;
             my @cc = $self->{cc} ? $self->{cc} : ();
             if (! ($self->{to} =~ /\Q$p5p\E/ || $self->{cc} =~ /\Q$p5p\E/) ) {
                 push @cc, $p5p;
