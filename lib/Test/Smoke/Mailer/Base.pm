@@ -81,7 +81,8 @@ by the new global regex kept in C<< $Test::Smoke::Mailer::NOCC_RE >>.
 
 sub _get_cc {
     my( $self, $subject ) = @_;
-    return "" if $subject =~ m/$Test::Smoke::Mailer::Base::NOCC_RE/;
+
+#    return "" if $subject =~ m/$Test::Smoke::Mailer::Base::NOCC_RE/;
 
 #    return $self->{cc} || "" unless $self->{ccp5p_onfail};
 #
@@ -92,18 +93,28 @@ sub _get_cc {
 #                          $self->{cc} =~ /\Q$p5p\E/;
 #    return join ", ", @cc;
 
-    if (! $self->{ccp5p_onfail}) {
-        return $self->{cc} || "";
+    if ($subject =~ m/$Test::Smoke::Mailer::Base::NOCC_RE/) {
+        return '';
     }
     else {
-        if (! $Test::Smoke::Mailer::P5P) {
-            return $self->{cc};
+
+        if (! $self->{ccp5p_onfail}) {
+            return $self->{cc} || "";
         }
         else {
-            my $p5p = $Test::Smoke::Mailer::P5P;
-            my @cc = $self->{cc} ? $self->{cc} : ();
-            if (! ($self->{to} =~ /\Q$p5p\E/ || $self->{cc} =~ /\Q$p5p\E/) ) {
-                push @cc, $p5p;
+            if (! $Test::Smoke::Mailer::P5P) {
+                return $self->{cc};
+            }
+            else {
+                my $p5p = $Test::Smoke::Mailer::P5P;
+                my @cc = $self->{cc} ? $self->{cc} : ();
+
+                # Push onto @cc the P5P list address unless that list is already the
+                # value assigned to the 'to' element or the 'cc' element.
+
+                if (! ($self->{to} =~ /\Q$p5p\E/ || $self->{cc} =~ /\Q$p5p\E/) ) {
+                    push @cc, $p5p;
+                }
                 return join ", ", @cc;
             }
         }
