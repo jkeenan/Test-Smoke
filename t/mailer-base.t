@@ -121,14 +121,14 @@ my %basic_mailer_args = (
     $mailer_args{ccp5p_onfail} = 1;
     my $this_cc = '';
     $mailer_args{cc} = $this_cc;
-    local $Test::Smoke::Mailer::Base::P5P = '';
     my $mailer = Test::Smoke::Mailer::Base->new(%mailer_args);
     isa_ok($mailer, 'Test::Smoke::Mailer::Base');
 
     my ($subject, $rv);
     $subject = ' UNKNOWN';
     $rv = $mailer->_get_cc($subject);
-    is($rv, $this_cc, "_get_cc() returned expected email addresses");
+    is($rv, $Test::Smoke::Mailer::Base::P5P,
+        "_get_cc() returned P5P list address, as expected");
 }
 
 {

@@ -86,7 +86,7 @@ sub _get_cc {
 
 #    return $self->{cc} || "" unless $self->{ccp5p_onfail};
 #
-#    my $p5p = $Test::Smoke::Mailer::P5P or return $self->{cc};
+#    my $p5p = $Test::Smoke::Mailer::Base::P5P or return $self->{cc};
 #    my @cc = $self->{cc} ? $self->{cc} : ();
 #
 #    push @cc, $p5p unless $self->{to} =~ /\Q$p5p\E/ ||
@@ -102,11 +102,15 @@ sub _get_cc {
             return $self->{cc} || "";
         }
         else {
-            if (! $Test::Smoke::Mailer::P5P) {
+            if (! $Test::Smoke::Mailer::Base::P5P) {
                 return $self->{cc};
             }
             else {
-                my $p5p = $Test::Smoke::Mailer::P5P;
+                # subject is neither PASS nor Fail
+                # ccp5p_onfail is true
+                # $Test::Smoke::Mailer::Base is populated
+                # cc is true or not
+                my $p5p = $Test::Smoke::Mailer::Base::P5P;
                 my @cc = $self->{cc} ? $self->{cc} : ();
 
                 # Push onto @cc the P5P list address unless that list is already the
