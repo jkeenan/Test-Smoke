@@ -165,6 +165,7 @@ sub _extract_with_Archive_Tar {
     my $self = shift;
 
     require Archive::Tar;
+    { no warnings 'once'; $Archive::Tar::INSECURE_EXTRACT_MODE = 1; }
 
     my $archive = Archive::Tar->new() or do {
         require Carp;

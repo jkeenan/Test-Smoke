@@ -119,6 +119,9 @@ sub get_avail_tar {
 
     my $has_archive_tar = has_module('Archive::Tar');
     if ($has_archive_tar) {
+        if ( eval "$Archive::Tar::VERSION" >= 3.08 ) {
+	    { no warnings 'once'; $Archive::Tar::INSECURE_EXTRACT_MODE = 1; }
+        }
         if ( eval "$Archive::Tar::VERSION" >= 0.99 ) {
             $use_modules = has_module('IO::Zlib');
         } else {

@@ -272,6 +272,7 @@ sub do_untargz {
 
     if ( $untgz eq 'Archive::Tar' ) {
         require Archive::Tar;
+        { no warnings 'once'; $Archive::Tar::INSECURE_EXTRACT_MODE = 1; }
 
         my $archive = Archive::Tar->new() or do {
             warn "Can't Archive::Tar->new: " . $Archive::Tar::error;

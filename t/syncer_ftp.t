@@ -90,9 +90,11 @@ SKIP: { # Here we try for 'Archive::Tar'/'Compress::Zlib'
 
     eval { require Archive::Tar; };
     $@ and skip "Can't load 'Archive::Tar'", 3;
+    { no warnings 'once'; $Archive::Tar::INSECURE_EXTRACT_MODE = 1; }
 
     eval { require Compress::Zlib; };
     $@ and skip "Can't load 'Compress::Zlib'", 3;
+
 
     my $syncer = Test::Smoke::Syncer->new(
         snapshot => {
