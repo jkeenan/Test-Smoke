@@ -12,7 +12,7 @@ use TestLib;
 use Cwd 'abs_path';
 use File::Temp 'tempdir';
 
-use Test::More tests => 44;
+use Test::More tests => 47;
 BEGIN { use_ok( 'Test::Smoke::Patcher' ) };
 my $verbose = exists $ENV{SMOKE_VERBOSE} ? $ENV{SMOKE_VERBOSE} : 0;
 
